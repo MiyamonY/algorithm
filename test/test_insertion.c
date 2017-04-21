@@ -8,7 +8,7 @@
 #include <criterion/criterion.h>
 #include <stdint.h>
 
-#include "insertion.h"
+#include "problems.h"
 
 static const uint8_t const ac[] = {1, 2, 3, 4, 5, 6};
 

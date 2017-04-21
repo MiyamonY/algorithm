@@ -8,7 +8,7 @@
 #include <criterion/criterion.h>
 #include <stdint.h>
 
-#include "gcd.h"
+#include "problems.h"
 
 Test(gcd, same_number)
 {

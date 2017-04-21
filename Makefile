@@ -1,10 +1,18 @@
 .PHONY: clean
 
+TEST_ARG:=-lcriterion -DTEST
+
 insertion: insertion.c
 	gcc -o $@ $<
 
 test_insertion: insertion.c test_insertion.c
-	gcc -o $@ $^ -lcriterion -DTEST
+	gcc -o $@ $^ $(TEST_ARG)
+
+gcd: gcd.c
+	gcc -o $@ $<
+
+test_gcd: gcd.c test_gcd.c
+	gcc -o $@ $^ $(TEST_ARG)
 
 clean:
-	$(RM) test_insertion insertion
+	$(RM)  insertion gcd test_gcd test_insertion

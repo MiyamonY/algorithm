@@ -18,6 +18,8 @@ extern "C" {
 extern void insertion_sort(uint8_t buf[], size_t size);
 extern uint32_t bubble_sort(int32_t buf[], size_t size);
 extern uint32_t selection_sort(int32_t buf[], size_t size);
+extern uint32_t stable_bubble_sort(char *const buf[], const size_t size);
+extern uint32_t stable_selection_sort(char *const buf[], const size_t size);
 
 extern int64_t gcd(const int64_t a, const int64_t b);
 #ifdef __cplusplus

@@ -25,5 +25,8 @@ test_selection: selection.c test/test_selection.c
 test_stable: stable.c test/test_stable.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_stack: stack.c test/test_stack.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

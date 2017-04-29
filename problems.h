@@ -30,6 +30,12 @@ extern size_t stack_get_size(const stack_t *const stack);
 extern bool stack_push(stack_t *const stack, const int32_t data);
 extern bool stack_pop(stack_t *const stack, int32_t *const data);
 
+struct queue_tag;
+typedef struct queue_tag queue_t;
+extern queue_t *queue_create(const size_t len);
+extern size_t queue_get_size(const queue_t *const q);
+extern void queue_destroy(const queue_t *q);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

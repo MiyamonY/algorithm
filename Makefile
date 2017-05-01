@@ -7,7 +7,6 @@ bubble: bubble.c
 selection: selection.c
 gcd: gcd.c
 
-
 test: test_insertion test_gcd test_bubble
 
 test_insertion: insertion.c test/test_insertion.c

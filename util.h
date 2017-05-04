@@ -26,13 +26,15 @@ extern "C" {
 
 #define UTIL_PRINT_ARRAY(arr, size)                                                                                                        \
   do {                                                                                                                                     \
-    uint16_t i;                                                                                                                            \
-    for (i = 0; i < size; i++) {                                                                                                           \
-      if (i != 0) printf(" ");                                                                                                             \
-      printf("%d", arr[i]);                                                                                                                \
+    int32_t _i;                                                                                                                            \
+    for (_i = 0; _i < (size); _i++) {                                                                                                      \
+      if (_i != 0) printf(" ");                                                                                                            \
+      printf("%d", arr[_i]);                                                                                                               \
     }                                                                                                                                      \
     printf("\n");                                                                                                                          \
   } while (0)
+
+#define UTIL_MIN(x, y) ((x) < (y) ? (x) : (y))
 
 static inline char const *util_sprintf_array(char const buf[], uint32_t const arr[], const size_t size)
 {

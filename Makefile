@@ -30,5 +30,8 @@ test_stack: stack.c test/test_stack.c
 test_queue: queue.c test/test_queue.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_double_linked_list: double_linked_list.c test/test_double_linked_list.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

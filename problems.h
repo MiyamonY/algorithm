@@ -38,6 +38,16 @@ extern size_t queue_get_size(const queue_t *const q);
 extern bool queue_enqueue(queue_t *const q, void *data, size_t len);
 extern bool queue_dequeue(queue_t *const q, void *data, size_t len);
 
+struct dobule_linked_list_tag;
+typedef struct double_linked_list_tag double_linked_list_t;
+extern double_linked_list_t *double_linked_list_create(void);
+extern void double_linked_list_destroy(double_linked_list_t *const l);
+extern bool double_linked_list_insert(double_linked_list_t *const l, int32_t data);
+extern size_t double_linked_list_to_array(double_linked_list_t *const l, int32_t buf[], const size_t size);
+extern bool double_linked_list_delete(double_linked_list_t *const l, int32_t data);
+extern bool double_linked_list_delete_first(double_linked_list_t *const l);
+extern bool double_linked_list_delete_last(double_linked_list_t *const l);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

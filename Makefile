@@ -36,5 +36,8 @@ test_double_linked_list: double_linked_list.c test/test_double_linked_list.c
 test_linear_search : linear_search.c test/test_linear_search.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_binary_search : binary_search.c test/test_binary_search.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

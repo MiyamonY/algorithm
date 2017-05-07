@@ -49,6 +49,7 @@ extern bool double_linked_list_delete_first(double_linked_list_t *const l);
 extern bool double_linked_list_delete_last(double_linked_list_t *const l);
 
 extern size_t linear_search_find(int32_t data[], size_t data_size, int32_t find[], size_t find_size);
+extern size_t binary_search_find(int32_t data[], size_t data_size, int32_t find[], size_t find_size);
 
 extern int64_t gcd(const int64_t a, const int64_t b);
 

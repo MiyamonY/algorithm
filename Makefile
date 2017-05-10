@@ -42,5 +42,8 @@ test_binary_search : binary_search.c test/test_binary_search.c
 test_dictionary : dictionary.c test/test_dictionary.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_exhaustive_search: exhaustive_search.c test/test_exhaustive_search.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

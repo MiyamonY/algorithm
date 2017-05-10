@@ -57,6 +57,8 @@ extern void dictionary_destroy(dictionary_t dict);
 extern bool dictionary_insert(dictionary_t dict, uint64_t data);
 extern bool dictionary_search(dictionary_t dict, uint64_t data);
 
+extern bool exhaustive_search_search(int32_t data[], size_t size, int32_t find);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

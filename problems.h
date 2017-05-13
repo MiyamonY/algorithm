@@ -59,6 +59,13 @@ extern bool dictionary_search(dictionary_t dict, uint64_t data);
 
 extern bool exhaustive_search_search(int32_t data[], size_t size, int32_t find);
 
+typedef struct {
+  double x;
+  double y;
+} point_t;
+
+extern size_t koch_curve(uint32_t n, point_t a, point_t b, point_t data[]);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

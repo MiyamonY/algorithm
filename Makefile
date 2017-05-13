@@ -1,11 +1,11 @@
 .PHONY: clean
 
+CC=gcc
 TEST_ARGS:=-lcriterion -DTEST -I.
+LDFLAGS += -lm
 
-insertion: insertion.c
-bubble: bubble.c
-selection: selection.c
-gcd: gcd.c
+koch_curve: koch_curve.c
+	$(CC) -o $@ $< $(LDFLAGS)
 
 test: test_insertion test_gcd test_bubble
 
@@ -44,6 +44,9 @@ test_dictionary : dictionary.c test/test_dictionary.c
 
 test_exhaustive_search: exhaustive_search.c test/test_exhaustive_search.c
 	gcc -o $@ $^ $(TEST_ARGS)
+
+test_koch_curve: koch_curve.c test/test_koch_curve.c
+	gcc -o $@ $^ $(TEST_ARGS) -lm
 
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

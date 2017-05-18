@@ -49,7 +49,10 @@ test_koch_curve: koch_curve.c test/test_koch_curve.c
 	gcc -o $@ $^ $(TEST_ARGS) -lm
 
 test_merge_sort: merge_sort.c test/test_merge_sort.c
-	gcc -o $@ $^ $(TEST_ARGS) -lm
+	gcc -o $@ $^ $(TEST_ARGS)
+
+test_partition: partition.c test/test_partition.c
+	gcc -o $@ $^ $(TEST_ARGS)
 
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

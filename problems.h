@@ -68,6 +68,14 @@ extern size_t koch_curve(uint32_t n, point_t a, point_t b, point_t data[]);
 
 extern size_t merge_sort(int64_t data[], size_t len);
 extern size_t partition(int32_t data[], size_t len);
+
+typedef struct {
+  int64_t num;
+  char design;
+} card_t;
+
+extern void quick_sort(card_t data[], size_t len);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

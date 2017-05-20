@@ -75,6 +75,7 @@ typedef struct {
 } card_t;
 
 extern void quick_sort(card_t data[], size_t len);
+extern bool quick_sort_is_stable(card_t cards[], size_t len);
 
 extern int64_t gcd(const int64_t a, const int64_t b);
 

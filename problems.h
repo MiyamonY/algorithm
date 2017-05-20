@@ -77,6 +77,11 @@ typedef struct {
 extern void quick_sort(card_t data[], size_t len);
 extern bool quick_sort_is_stable(card_t cards[], size_t len);
 
+typedef struct counting_sort_t *counting_sort_t;
+extern counting_sort_t counting_sort_create(size_t n);
+extern void counting_sort_destroy(counting_sort_t c);
+extern void counting_sort(counting_sort_t c, uint64_t data[], size_t len);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

@@ -82,6 +82,16 @@ extern counting_sort_t counting_sort_create(size_t n);
 extern void counting_sort_destroy(counting_sort_t c);
 extern void counting_sort(counting_sort_t c, uint64_t data[], size_t len);
 
+typedef struct rooted_tree_t *rooted_tree_t;
+typedef uint32_t rooted_tree_id_t;
+#define ROOTED_TREE_ID_NULL ((rooted_tree_id_t)0xFFFFFFFFFFFFFFFF)
+extern rooted_tree_t rooted_tree_create(size_t size);
+extern void rooted_tree_destroy(rooted_tree_t t);
+extern bool rooted_tree_insert(rooted_tree_t t, rooted_tree_id_t id, rooted_tree_id_t children[], size_t size);
+extern bool rooted_tree_depth(rooted_tree_t t, rooted_tree_id_t id, size_t *depth);
+extern bool rooted_tree_parent(rooted_tree_t t, rooted_tree_id_t id, rooted_tree_id_t *parent);
+extern bool rooted_tree_children(rooted_tree_t t, rooted_tree_id_t id, rooted_tree_id_t *children, size_t *len);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

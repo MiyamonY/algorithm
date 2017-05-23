@@ -60,5 +60,8 @@ test_quick_sort: quick_sort.c test/test_quick_sort.c
 test_counting_sort: counting_sort.c test/test_counting_sort.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_rooted_tree: rooted_tree.c test/test_rooted_tree.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

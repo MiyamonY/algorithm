@@ -84,13 +84,24 @@ extern void counting_sort(counting_sort_t c, uint64_t data[], size_t len);
 
 typedef struct rooted_tree_t *rooted_tree_t;
 typedef uint32_t rooted_tree_id_t;
-#define ROOTED_TREE_ID_NULL ((rooted_tree_id_t)0xFFFFFFFFFFFFFFFF)
+#define ROOTED_TREE_ID_NULL ((rooted_tree_id_t)0xFFFFFFFF)
 extern rooted_tree_t rooted_tree_create(size_t size);
 extern void rooted_tree_destroy(rooted_tree_t t);
 extern bool rooted_tree_insert(rooted_tree_t t, rooted_tree_id_t id, rooted_tree_id_t children[], size_t size);
 extern bool rooted_tree_depth(rooted_tree_t t, rooted_tree_id_t id, size_t *depth);
 extern bool rooted_tree_parent(rooted_tree_t t, rooted_tree_id_t id, rooted_tree_id_t *parent);
 extern bool rooted_tree_children(rooted_tree_t t, rooted_tree_id_t id, rooted_tree_id_t *children, size_t *len);
+
+typedef struct binary_tree_t *binary_tree_t;
+typedef uint32_t binary_tree_id_t;
+#define BINARY_TREE_ID_NULL ((binary_tree_id_t)0xFFFFFFFF)
+extern binary_tree_t binary_tree_create(size_t size);
+extern void binary_tree_destroy(binary_tree_t t);
+extern bool binary_tree_insert(binary_tree_t t, binary_tree_id_t id, binary_tree_id_t right, binary_tree_id_t left);
+extern bool binary_tree_sibling(binary_tree_t t, binary_tree_id_t id, binary_tree_id_t *sibling);
+extern bool binary_tree_degree(binary_tree_t t, binary_tree_id_t id, size_t *degree);
+extern bool binary_tree_depth(binary_tree_t t, binary_tree_id_t id, size_t *depth);
+extern bool binary_tree_height(binary_tree_t t, binary_tree_id_t id, size_t *height);
 
 extern int64_t gcd(const int64_t a, const int64_t b);
 

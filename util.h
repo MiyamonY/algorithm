@@ -35,6 +35,7 @@ extern "C" {
   } while (0)
 
 #define UTIL_MIN(x, y) ((x) < (y) ? (x) : (y))
+#define UTIL_MAX(x, y) ((x) < (y) ? (y) : (x))
 
 static inline char const *util_sprintf_array(char const buf[], uint32_t const arr[], const size_t size)
 {

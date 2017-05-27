@@ -30,7 +30,7 @@ static bool check_id_exists(binary_tree_t t, binary_tree_id_t id)
   return t->tree[id].exists;
 }
 
-static bool check_element_exists(binary_tree_id_t id)
+static bool check_node_exists(binary_tree_id_t id)
 {
   return id != BINARY_TREE_ID_NULL;
 }
@@ -48,6 +48,26 @@ static binary_tree_id_t get_right_child_from(binary_tree_t t, binary_tree_id_t i
 static binary_tree_id_t get_left_child_from(binary_tree_t t, binary_tree_id_t id)
 {
   return t->tree[id].left;
+}
+
+static bool check_top(binary_tree_t t, binary_tree_id_t id)
+{
+  return check_id_exists(t, id) && !check_node_exists(t->tree[id].parent);
+}
+
+static bool find_top_element(binary_tree_t t, binary_tree_id_t *id)
+{
+  bool top_found = false;
+  uint32_t i;
+  for (i = 0; i < t->size; i++) {
+    if (check_top(t, i)) {
+      top_found = true;
+      *id = i;
+      break;
+    }
+  }
+
+  return top_found;
 }
 
 binary_tree_t binary_tree_create(size_t size)
@@ -81,20 +101,20 @@ void binary_tree_destroy(binary_tree_t t)
   free(t);
 }
 
-bool binary_tree_insert(binary_tree_t t, binary_tree_id_t id, binary_tree_id_t right, binary_tree_id_t left)
+bool binary_tree_insert(binary_tree_t t, binary_tree_id_t id, binary_tree_id_t left, binary_tree_id_t right)
 {
   if ((t == NULL) || check_id_exists(t, id)) return false;
 
-  if (check_element_exists(right)) {
-    t->tree[right].parent = id;
-  }
-
-  if (check_element_exists(left)) {
+  if (check_node_exists(left)) {
     t->tree[left].parent = id;
   }
 
-  t->tree[id].right = right;
+  if (check_node_exists(right)) {
+    t->tree[right].parent = id;
+  }
+
   t->tree[id].left = left;
+  t->tree[id].right = right;
   t->tree[id].exists = true;
   return true;
 }
@@ -122,11 +142,11 @@ bool binary_tree_degree(binary_tree_t t, binary_tree_id_t id, size_t *degree)
   if ((t == NULL) || !check_id_exists(t, id)) return false;
 
   size_t count = 0;
-  if (check_element_exists(get_right_child_from(t, id))) {
+  if (check_node_exists(get_right_child_from(t, id))) {
     count++;
   }
 
-  if (check_element_exists(get_left_child_from(t, id))) {
+  if (check_node_exists(get_left_child_from(t, id))) {
     count++;
   }
 
@@ -154,14 +174,14 @@ bool binary_tree_height(binary_tree_t t, binary_tree_id_t id, size_t *height)
 
   size_t left_height = 0;
   binary_tree_id_t left_id = get_left_child_from(t, id);
-  if (check_element_exists(left_id)) {
+  if (check_node_exists(left_id)) {
     binary_tree_height(t, left_id, &left_height);
     left_height++;
   }
 
   size_t right_height = 0;
   binary_tree_id_t right_id = get_right_child_from(t, id);
-  if (check_element_exists(right_id)) {
+  if (check_node_exists(right_id)) {
     binary_tree_height(t, right_id, &right_height);
     right_height++;
   }
@@ -170,14 +190,98 @@ bool binary_tree_height(binary_tree_t t, binary_tree_id_t id, size_t *height)
   return true;
 }
 
+static size_t preorder(binary_tree_t t, binary_tree_id_t id, binary_tree_callback_t callback)
+{
+  size_t count = 0;
+  callback(id);
+  count++;
+
+  binary_tree_id_t left_id = get_left_child_from(t, id);
+  if (check_node_exists(left_id)) {
+    count += preorder(t, left_id, callback);
+  }
+
+  binary_tree_id_t right_id = get_right_child_from(t, id);
+  if (check_node_exists(right_id)) {
+    count += preorder(t, right_id, callback);
+  }
+
+  return count;
+}
+
+size_t binary_tree_preorder(binary_tree_t t, binary_tree_callback_t callback)
+{
+  binary_tree_id_t top;
+
+  if (!find_top_element(t, &top)) return 0;
+
+  return preorder(t, top, callback);
+}
+
+static size_t inorder(binary_tree_t t, binary_tree_id_t id, binary_tree_callback_t callback)
+{
+  size_t count = 0;
+
+  binary_tree_id_t left_id = get_left_child_from(t, id);
+  if (check_node_exists(left_id)) {
+    count += inorder(t, left_id, callback);
+  }
+
+  callback(id);
+  count++;
+
+  binary_tree_id_t right_id = get_right_child_from(t, id);
+  if (check_node_exists(right_id)) {
+    count += inorder(t, right_id, callback);
+  }
+
+  return count;
+}
+
+size_t binary_tree_inorder(binary_tree_t t, binary_tree_callback_t callback)
+{
+  binary_tree_id_t top;
+
+  if (!find_top_element(t, &top)) return 0;
+
+  return inorder(t, top, callback);
+}
+
+static size_t postorder(binary_tree_t t, binary_tree_id_t id, binary_tree_callback_t callback)
+{
+  size_t count = 0;
+
+  binary_tree_id_t left_id = get_left_child_from(t, id);
+  if (check_node_exists(left_id)) {
+    count += postorder(t, left_id, callback);
+  }
+
+  binary_tree_id_t right_id = get_right_child_from(t, id);
+  if (check_node_exists(right_id)) {
+    count += postorder(t, right_id, callback);
+  }
+
+  callback(id);
+  count++;
+
+  return count;
+}
+
+size_t binary_tree_postorder(binary_tree_t t, binary_tree_callback_t callback)
+{
+  binary_tree_id_t top;
+
+  if (!find_top_element(t, &top)) return 0;
+
+  return postorder(t, top, callback);
+}
+
 #if !defined(TEST)
 
 #define id_to_format(id) ((id) == BINARY_TREE_ID_NULL ? -1 : (int32_t)(id))
 
-int32_t main(void)
+static size_t insert_nodes(binary_tree_t t)
 {
-  binary_tree_t t = binary_tree_create(25);
-
   uint32_t num;
   scanf("%u", &num);
 
@@ -194,6 +298,12 @@ int32_t main(void)
                        right == -1 ? BINARY_TREE_ID_NULL : (binary_tree_id_t)right);
   }
 
+  return num;
+}
+
+static void print_tree(binary_tree_t t, size_t num)
+{
+  uint32_t i;
   for (i = 0; i < num; i++) {
     binary_tree_id_t parent = get_parent_from(t, i);
     binary_tree_id_t sibling;
@@ -216,6 +326,37 @@ int32_t main(void)
     }
     printf("\n");
   }
+}
+
+static void print_id(binary_tree_id_t id)
+{
+  printf(" %d", id);
+}
+
+static void print_tree_walk(binary_tree_t t)
+{
+  printf("Preorder\n");
+  binary_tree_preorder(t, print_id);
+  printf("\n");
+
+  printf("Inorder\n");
+  binary_tree_inorder(t, print_id);
+  printf("\n");
+
+  printf("Postorder\n");
+  binary_tree_postorder(t, print_id);
+  printf("\n");
+}
+
+int32_t main(void)
+{
+  binary_tree_t t = binary_tree_create(25);
+
+  size_t num = insert_nodes(t);
+  // print_tree(t, num);
+  print_tree_walk(t);
+
+  binary_tree_destroy(t);
 
   return 0;
 }

@@ -66,5 +66,8 @@ test_rooted_tree: rooted_tree.c test/test_rooted_tree.c
 test_binary_tree: binary_tree.c test/test_binary_tree.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_tree_walk: binary_tree.c test/test_tree_walk.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

@@ -102,6 +102,10 @@ extern bool binary_tree_sibling(binary_tree_t t, binary_tree_id_t id, binary_tre
 extern bool binary_tree_degree(binary_tree_t t, binary_tree_id_t id, size_t *degree);
 extern bool binary_tree_depth(binary_tree_t t, binary_tree_id_t id, size_t *depth);
 extern bool binary_tree_height(binary_tree_t t, binary_tree_id_t id, size_t *height);
+typedef void (*binary_tree_callback_t)(binary_tree_id_t);
+extern size_t binary_tree_preorder(binary_tree_t t, binary_tree_callback_t callback);
+extern size_t binary_tree_inorder(binary_tree_t t, binary_tree_callback_t callback);
+extern size_t binary_tree_postorder(binary_tree_t t, binary_tree_callback_t callback);
 
 extern int64_t gcd(const int64_t a, const int64_t b);
 

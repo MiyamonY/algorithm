@@ -207,6 +207,28 @@ size_t binary_search_tree_inorder(binary_search_tree_t t, binary_search_tree_cal
   return 0;
 }
 
+bool tree_find(node_t node, int64_t key)
+{
+  if (!is_node_exists(node)) return false;
+
+  int64_t node_key = get_key_from(node);
+  if (node_key == key) {
+    return true;
+  } else if (key < node_key) {
+    return tree_find(get_left_node(node), key);
+  } else {
+    return tree_find(get_right_node(node), key);
+  }
+}
+
+bool binary_search_tree_find(binary_search_tree_t t, int64_t key)
+{
+  if ((t != NULL) && is_top_exists(t)) {
+    return tree_find(t->top, key);
+  }
+  return false;
+}
+
 #if !defined(TEST)
 static void print_callback(int64_t data)
 {
@@ -229,6 +251,15 @@ int32_t main(void)
       int64_t data;
       scanf("%ld", &data);
       binary_search_tree_insert(t, data);
+    } else if (command[0] == 'f') {
+      int64_t data;
+      scanf("%ld", &data);
+      bool ret = binary_search_tree_find(t, data);
+      if (ret) {
+        printf("yes\n");
+      } else {
+        printf("no\n");
+      }
     } else {
       binary_search_tree_inorder(t, print_callback);
       printf("\n");

@@ -64,6 +64,16 @@ Test(BinarySearchTreeWhoseSizeIs0, InorderSizeIs0)
   cr_assert_eq(len, 0);
 }
 
+Test(BinarySearchTreeWhoseSizeIs0, AnyDataNotFound)
+{
+  bool ret = binary_search_tree_find(t, 3);
+  cr_assert_not(ret);
+  ret = binary_search_tree_find(t, 0);
+  cr_assert_not(ret);
+  ret = binary_search_tree_find(t, 32);
+  cr_assert_not(ret);
+}
+
 static void setup1(void)
 {
   t = binary_search_tree_create();
@@ -88,6 +98,16 @@ Test(BinarySearchTreeWhoseSizeIs1, InorderSizeIs1)
   size_t len = binary_search_tree_inorder(t, callback);
   cr_assert_eq(len, 1);
   cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
+}
+
+Test(BinarySearchTreeWhoseSizeIs1, DataNotFound)
+{
+  cr_assert_not(binary_search_tree_find(t, 0));
+}
+
+Test(BinarySearchTreeWhoseSizeIs1, DataFound)
+{
+  cr_assert(binary_search_tree_find(t, 1));
 }
 
 static void setup2(void)
@@ -122,6 +142,22 @@ Test(BinarySearchTree, InorderReturnsKeys)
   cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
 
+Test(BinarySearchTree, KeyNotFound)
+{
+  cr_assert_not(binary_search_tree_find(t, 0));
+  cr_assert_not(binary_search_tree_find(t, 2));
+  cr_assert_not(binary_search_tree_find(t, 87));
+  cr_assert_not(binary_search_tree_find(t, 89));
+}
+
+Test(BinarySearchTree, KeyFound)
+{
+  cr_assert(binary_search_tree_find(t, 1));
+  cr_assert(binary_search_tree_find(t, 88));
+  cr_assert(binary_search_tree_find(t, 30));
+  cr_assert(binary_search_tree_find(t, 20));
+}
+
 Test(BinarySearchTreeMemoryAllocationCheck, AllAllocationIsFreed)
 {
   t = binary_search_tree_create();
@@ -147,4 +183,5 @@ Test(BinarySearchTreeNullCheck, AllFunctionNotCrashedWithNull)
   cr_assert_eq(binary_search_tree_inorder(NULL, NULL), 0);
   cr_assert_eq(binary_search_tree_inorder(t, NULL), 0);
   binary_search_tree_destroy(t);
+  cr_assert_not(binary_search_tree_find(NULL, 3));
 }

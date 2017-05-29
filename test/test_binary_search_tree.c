@@ -121,3 +121,30 @@ Test(BinarySearchTree, InorderReturnsKeys)
   cr_assert_eq(len, UTIL_ARRAY_SIZE(expect));
   cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
+
+Test(BinarySearchTreeMemoryAllocationCheck, AllAllocationIsFreed)
+{
+  t = binary_search_tree_create();
+  binary_search_tree_insert(t, 30);
+  binary_search_tree_insert(t, 88);
+  binary_search_tree_insert(t, 12);
+  binary_search_tree_insert(t, 1);
+  binary_search_tree_insert(t, 20);
+  binary_search_tree_insert(t, 17);
+  binary_search_tree_insert(t, 25);
+  cr_assert_eq(memory_allocation_counter, 8);
+  binary_search_tree_destroy(t);
+  cr_assert_eq(memory_allocation_counter, 0);
+}
+
+Test(BinarySearchTreeNullCheck, AllFunctionNotCrashedWithNull)
+{
+  binary_search_tree_destroy(NULL);
+  binary_search_tree_insert(NULL, 3);
+  cr_assert_eq(binary_search_tree_preorder(NULL, NULL), 0);
+  t = binary_search_tree_create();
+  cr_assert_eq(binary_search_tree_preorder(t, NULL), 0);
+  cr_assert_eq(binary_search_tree_inorder(NULL, NULL), 0);
+  cr_assert_eq(binary_search_tree_inorder(t, NULL), 0);
+  binary_search_tree_destroy(t);
+}

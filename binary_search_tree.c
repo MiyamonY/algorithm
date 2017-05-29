@@ -100,9 +100,8 @@ void binary_search_tree_destroy(binary_search_tree_t t)
     if (t->top != NULL) {
       free_nodes(t->top);
     }
+    free(t);
   }
-
-  free(t);
 
   return;
 }
@@ -142,6 +141,8 @@ static void insert_node(node_t to, node_t node)
 void binary_search_tree_insert(binary_search_tree_t t, int64_t key)
 {
   node_t node;
+
+  if (t == NULL) return;
 
   if (!create_new_node(key, &node)) goto err;
 
@@ -190,7 +191,7 @@ static size_t order(order_type_t type, node_t node, binary_search_tree_callback_
 
 size_t binary_search_tree_preorder(binary_search_tree_t t, binary_search_tree_callback_t callback)
 {
-  if (is_top_exists(t)) {
+  if ((t != NULL) && is_top_exists(t)) {
     return order(PREORDER, t->top, callback);
   }
 
@@ -199,9 +200,45 @@ size_t binary_search_tree_preorder(binary_search_tree_t t, binary_search_tree_ca
 
 size_t binary_search_tree_inorder(binary_search_tree_t t, binary_search_tree_callback_t callback)
 {
-  if (is_top_exists(t)) {
+  if ((t != NULL) && is_top_exists(t)) {
     return order(INORDER, t->top, callback);
   }
 
   return 0;
 }
+
+#if !defined(TEST)
+static void print_callback(int64_t data)
+{
+  printf(" %ld", data);
+}
+
+int32_t main(void)
+{
+  binary_search_tree_t t = binary_search_tree_create();
+
+  uint32_t num;
+  scanf("%u", &num);
+  uint32_t i;
+
+  for (i = 0; i < num; i++) {
+    char command[10];
+
+    scanf("%s", command);
+    if (command[0] == 'i') {
+      int64_t data;
+      scanf("%ld", &data);
+      binary_search_tree_insert(t, data);
+    } else {
+      binary_search_tree_inorder(t, print_callback);
+      printf("\n");
+      binary_search_tree_preorder(t, print_callback);
+      printf("\n");
+    }
+  }
+
+  binary_search_tree_destroy(t);
+
+  return 0;
+}
+#endif

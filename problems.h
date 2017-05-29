@@ -107,6 +107,14 @@ extern size_t binary_tree_preorder(binary_tree_t t, binary_tree_callback_t callb
 extern size_t binary_tree_inorder(binary_tree_t t, binary_tree_callback_t callback);
 extern size_t binary_tree_postorder(binary_tree_t t, binary_tree_callback_t callback);
 
+typedef struct binary_search_tree_t *binary_search_tree_t;
+typedef void (*binary_search_tree_callback_t)(int64_t);
+extern binary_search_tree_t binary_search_tree_create(void);
+extern void binary_search_tree_destroy(binary_search_tree_t t);
+extern void binary_search_tree_insert(binary_search_tree_t t, int64_t data);
+extern size_t binary_search_tree_preorder(binary_search_tree_t t, binary_search_tree_callback_t callback);
+extern size_t binary_search_tree_inorder(binary_search_tree_t t, binary_search_tree_callback_t callback);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

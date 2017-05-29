@@ -69,5 +69,8 @@ test_binary_tree: binary_tree.c test/test_binary_tree.c
 test_tree_walk: binary_tree.c test/test_tree_walk.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_binary_search_tree: binary_search_tree.c test/test_binary_search_tree.c
+	gcc -o $@ $^ $(TEST_ARGS) -Wl,-wrap,malloc,-wrap,free
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

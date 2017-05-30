@@ -17,6 +17,7 @@ struct node_t {
   int64_t key;
   node_t left;
   node_t right;
+  node_t parent;
 };
 
 struct binary_search_tree_t {
@@ -58,6 +59,11 @@ static node_t get_right_node(node_t node)
   return node->right;
 }
 
+static node_t get_parent_from(node_t node)
+{
+  return node->parent;
+}
+
 static void set_node_to_left(node_t to, node_t node)
 {
   to->left = node;
@@ -66,6 +72,11 @@ static void set_node_to_left(node_t to, node_t node)
 static void set_node_to_right(node_t to, node_t node)
 {
   to->right = node;
+}
+
+static void set_node_parent(node_t node, node_t parent)
+{
+  node->parent = parent;
 }
 
 binary_search_tree_t binary_search_tree_create(void)
@@ -97,7 +108,7 @@ static void free_nodes(node_t node)
 void binary_search_tree_destroy(binary_search_tree_t t)
 {
   if (t != NULL) {
-    if (t->top != NULL) {
+    if (is_node_exists(t->top)) {
       free_nodes(t->top);
     }
     free(t);
@@ -121,19 +132,21 @@ static bool create_new_node(int64_t key, node_t *node)
   return true;
 }
 
-static void insert_node(node_t to, node_t node)
+static void insert_node(node_t parent, node_t node)
 {
-  if (get_key_form(to) > get_key_from(node)) {
-    if (is_node_exists(get_left_node(to))) {
-      insert_node(get_left_node(to), node);
+  if (get_key_form(parent) > get_key_from(node)) {
+    if (is_node_exists(get_left_node(parent))) {
+      insert_node(get_left_node(parent), node);
     } else {
-      set_node_to_left(to, node);
+      set_node_to_left(parent, node);
+      set_node_parent(node, parent);
     }
   } else {
-    if (is_node_exists(get_right_node(to))) {
-      insert_node(get_right_node(to), node);
+    if (is_node_exists(get_right_node(parent))) {
+      insert_node(get_right_node(parent), node);
     } else {
-      set_node_to_right(to, node);
+      set_node_to_right(parent, node);
+      set_node_parent(node, parent);
     }
   }
 }
@@ -146,8 +159,9 @@ void binary_search_tree_insert(binary_search_tree_t t, int64_t key)
 
   if (!create_new_node(key, &node)) goto err;
 
-  if (t->top == NULL) {
+  if (!is_node_exists(t->top)) {
     t->top = node;
+    set_node_parent(node, NULL);
   } else {
     insert_node(t->top, node);
   }
@@ -207,7 +221,7 @@ size_t binary_search_tree_inorder(binary_search_tree_t t, binary_search_tree_cal
   return 0;
 }
 
-bool tree_find(node_t node, int64_t key)
+static bool tree_find(node_t node, int64_t key)
 {
   if (!is_node_exists(node)) return false;
 
@@ -225,6 +239,90 @@ bool binary_search_tree_find(binary_search_tree_t t, int64_t key)
 {
   if ((t != NULL) && is_top_exists(t)) {
     return tree_find(t->top, key);
+  }
+  return false;
+}
+
+static void delete_leaf(binary_search_tree_t t, node_t leaf)
+{
+  node_t parent = get_parent_from(leaf);
+  if (!is_node_exists(parent)) {
+    t->top = NULL;
+  } else {
+    if (get_left_node(parent) == leaf) {
+      parent->left = NULL;
+    } else {
+      parent->right = NULL;
+    }
+  }
+  free(leaf);
+}
+
+static node_t get_minimum_node(node_t node)
+{
+  node_t left_child = get_left_node(node);
+
+  if (is_node_exists(left_child)) {
+    return get_minimum_node(left_child);
+  }
+  return node;
+}
+
+static node_t get_successor(node_t node)
+{
+  node_t right_child = get_right_node(node);
+  if (is_node_exists(right_child)) {
+    return get_minimum_node(right_child);
+  }
+  return node;
+}
+
+static bool tree_delete(binary_search_tree_t t, node_t node, int64_t key)
+{
+  int64_t node_key = get_key_from(node);
+  if (node_key == key) {
+    node_t parent = get_parent_from(node);
+    node_t right_child = get_right_node(node);
+    node_t left_child = get_left_node(node);
+    if (is_node_exists(left_child) && is_node_exists(right_child)) {
+      node_t successor = get_successor(node);
+      node->key = successor->key;
+      node_t successor_parent = get_parent_from(successor);
+      if (get_left_node(successor_parent) == successor) {
+        set_node_to_left(successor_parent, NULL);
+      } else {
+        set_node_to_right(successor_parent, NULL);
+      }
+      free(successor);
+    } else if (is_node_exists(left_child)) {
+      if (get_left_node(parent) == node) {
+        set_node_to_left(parent, left_child);
+      } else {
+        set_node_to_right(parent, left_child);
+      }
+    } else if (is_node_exists(right_child)) {
+      if (get_left_node(parent) == node) {
+        set_node_to_left(parent, right_child);
+      } else {
+        set_node_to_right(parent, right_child);
+      }
+    } else {
+      delete_leaf(t, node);
+    }
+    return true;
+  } else if (key < node_key) {
+    return tree_delete(t, get_left_node(node), key);
+  } else {
+    return tree_delete(t, get_right_node(node), key);
+  }
+
+  return false;
+}
+
+bool binary_search_tree_delete(binary_search_tree_t t, int64_t key)
+{
+  if (is_top_exists(t)) {
+    return tree_delete(t, t->top, key);
   }
   return false;
 }

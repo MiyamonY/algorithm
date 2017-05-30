@@ -74,6 +74,13 @@ Test(BinarySearchTreeWhoseSizeIs0, AnyDataNotFound)
   cr_assert_not(ret);
 }
 
+Test(BinarySearchTreeWhoseSizeIs0, AnyDataNotDeleted)
+{
+  cr_assert_not(binary_search_tree_delete(t, 3));
+  cr_assert_not(binary_search_tree_delete(t, 5));
+  cr_assert_not(binary_search_tree_delete(t, 0));
+}
+
 static void setup1(void)
 {
   t = binary_search_tree_create();
@@ -110,6 +117,13 @@ Test(BinarySearchTreeWhoseSizeIs1, DataFound)
   cr_assert(binary_search_tree_find(t, 1));
 }
 
+Test(BinarySearchTreeWhoseSizeIs1, DeleteTop)
+{
+  cr_assert(binary_search_tree_delete(t, 1));
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 0);
+}
+
 static void setup2(void)
 {
   t = binary_search_tree_create();
@@ -120,13 +134,15 @@ static void setup2(void)
   binary_search_tree_insert(t, 20);
   binary_search_tree_insert(t, 17);
   binary_search_tree_insert(t, 25);
+  binary_search_tree_insert(t, 99);
+  binary_search_tree_insert(t, 16);
 }
 
 TestSuite(BinarySearchTree, .init = setup2, .fini = teardown);
 
 Test(BinarySearchTree, PreorderReturnsKeys)
 {
-  const int64_t expect[] = {30, 12, 1, 20, 17, 25, 88};
+  const int64_t expect[] = {30, 12, 1, 20, 17, 16, 25, 88, 99};
 
   size_t len = binary_search_tree_preorder(t, callback);
   cr_assert_eq(len, UTIL_ARRAY_SIZE(expect));
@@ -135,7 +151,7 @@ Test(BinarySearchTree, PreorderReturnsKeys)
 
 Test(BinarySearchTree, InorderReturnsKeys)
 {
-  const int64_t expect[] = {1, 12, 17, 20, 25, 30, 88};
+  const int64_t expect[] = {1, 12, 16, 17, 20, 25, 30, 88, 99};
 
   size_t len = binary_search_tree_inorder(t, callback);
   cr_assert_eq(len, UTIL_ARRAY_SIZE(expect));
@@ -156,6 +172,41 @@ Test(BinarySearchTree, KeyFound)
   cr_assert(binary_search_tree_find(t, 88));
   cr_assert(binary_search_tree_find(t, 30));
   cr_assert(binary_search_tree_find(t, 20));
+}
+
+Test(BinarySearchTree, DeleteLeaf)
+{
+  cr_assert(binary_search_tree_delete(t, 1));
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 8);
+}
+
+Test(BinarySearchTree, DeleteNodeWhichHasLeftChild)
+{
+  cr_assert(binary_search_tree_delete(t, 17));
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 8);
+}
+
+Test(BinarySearchTree, DeleteNodeWhichHasRightChild)
+{
+  cr_assert(binary_search_tree_delete(t, 88));
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 8);
+}
+
+Test(BinarySearchTree, DeleteNodeWhichHasTwoChildren)
+{
+  cr_assert(binary_search_tree_delete(t, 12));
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 8);
+}
+
+Test(BinarySearchTree, DeleteTopNode)
+{
+  cr_assert(binary_search_tree_delete(t, 30));
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 8);
 }
 
 Test(BinarySearchTreeMemoryAllocationCheck, AllAllocationIsFreed)

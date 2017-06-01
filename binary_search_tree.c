@@ -221,24 +221,25 @@ size_t binary_search_tree_inorder(binary_search_tree_t t, binary_search_tree_cal
   return 0;
 }
 
-static bool tree_find(node_t node, int64_t key)
+static node_t find_node_by_key(node_t node, int64_t key)
 {
-  if (!is_node_exists(node)) return false;
+  if (!is_node_exists(node)) return NULL;
 
   int64_t node_key = get_key_from(node);
   if (node_key == key) {
-    return true;
+    return node;
   } else if (key < node_key) {
-    return tree_find(get_left_node(node), key);
+    return find_node_by_key(get_left_node(node), key);
   } else {
-    return tree_find(get_right_node(node), key);
+    return find_node_by_key(get_right_node(node), key);
   }
 }
 
 bool binary_search_tree_find(binary_search_tree_t t, int64_t key)
 {
   if ((t != NULL) && is_top_exists(t)) {
-    return tree_find(t->top, key);
+    node_t found = find_node_by_key(t->top, key);
+    return found != NULL;
   }
   return false;
 }
@@ -250,9 +251,9 @@ static void delete_leaf(binary_search_tree_t t, node_t leaf)
     t->top = NULL;
   } else {
     if (get_left_node(parent) == leaf) {
-      parent->left = NULL;
+      set_node_to_left(parent, NULL);
     } else {
-      parent->right = NULL;
+      set_node_to_right(parent, NULL);
     }
   }
   free(leaf);
@@ -277,46 +278,40 @@ static node_t get_successor(node_t node)
   return node;
 }
 
-static bool tree_delete(binary_search_tree_t t, node_t node, int64_t key)
+static bool tree_delete(binary_search_tree_t t, node_t top_node, int64_t key)
 {
-  int64_t node_key = get_key_from(node);
-  if (node_key == key) {
-    node_t parent = get_parent_from(node);
-    node_t right_child = get_right_node(node);
-    node_t left_child = get_left_node(node);
-    if (is_node_exists(left_child) && is_node_exists(right_child)) {
-      node_t successor = get_successor(node);
-      node->key = successor->key;
-      node_t successor_parent = get_parent_from(successor);
-      if (get_left_node(successor_parent) == successor) {
-        set_node_to_left(successor_parent, NULL);
-      } else {
-        set_node_to_right(successor_parent, NULL);
-      }
-      free(successor);
-    } else if (is_node_exists(left_child)) {
-      if (get_left_node(parent) == node) {
-        set_node_to_left(parent, left_child);
-      } else {
-        set_node_to_right(parent, left_child);
-      }
-    } else if (is_node_exists(right_child)) {
-      if (get_left_node(parent) == node) {
-        set_node_to_left(parent, right_child);
-      } else {
-        set_node_to_right(parent, right_child);
-      }
+  node_t delete_node = find_node_by_key(top_node, key);
+
+  if (delete_node == NULL) return false;
+
+  node_t parent = get_parent_from(delete_node);
+  node_t right_child = get_right_node(delete_node);
+  node_t left_child = get_left_node(delete_node);
+  if (is_node_exists(left_child) && is_node_exists(right_child)) {
+    node_t successor = get_successor(delete_node);
+    set_key_to(delete_node, successor->key);
+    tree_delete(t, successor, successor->key);
+  } else if (is_node_exists(left_child)) {
+    if (get_left_node(parent) == delete_node) {
+      set_node_to_left(parent, left_child);
     } else {
-      delete_leaf(t, node);
+      set_node_to_right(parent, left_child);
     }
-    return true;
-  } else if (key < node_key) {
-    return tree_delete(t, get_left_node(node), key);
+    set_node_parent(left_child, parent);
+    free(delete_node);
+  } else if (is_node_exists(right_child)) {
+    if (get_left_node(parent) == delete_node) {
+      set_node_to_left(parent, right_child);
+    } else {
+      set_node_to_right(parent, right_child);
+    }
+    set_node_parent(right_child, parent);
+    free(delete_node);
   } else {
-    return tree_delete(t, get_right_node(node), key);
+    delete_leaf(t, delete_node);
   }
 
-  return false;
+  return true;
 }
 
 bool binary_search_tree_delete(binary_search_tree_t t, int64_t key)
@@ -358,6 +353,10 @@ int32_t main(void)
       } else {
         printf("no\n");
       }
+    } else if (command[0] == 'd') {
+      int64_t data;
+      scanf("%ld", &data);
+      binary_search_tree_delete(t, data);
     } else {
       binary_search_tree_inorder(t, print_callback);
       printf("\n");

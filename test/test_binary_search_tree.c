@@ -176,37 +176,58 @@ Test(BinarySearchTree, KeyFound)
 
 Test(BinarySearchTree, DeleteLeaf)
 {
+  const int64_t expect[] = {12, 16, 17, 20, 25, 30, 88, 99};
   cr_assert(binary_search_tree_delete(t, 1));
   size_t ret = binary_search_tree_inorder(t, callback);
   cr_assert_eq(ret, 8);
+  cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
 
 Test(BinarySearchTree, DeleteNodeWhichHasLeftChild)
 {
+  const int64_t expect[] = {1, 12, 16, 20, 25, 30, 88, 99};
   cr_assert(binary_search_tree_delete(t, 17));
   size_t ret = binary_search_tree_inorder(t, callback);
   cr_assert_eq(ret, 8);
+  cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
 
 Test(BinarySearchTree, DeleteNodeWhichHasRightChild)
 {
+  const int64_t expect[] = {1, 12, 16, 17, 20, 25, 30, 99};
   cr_assert(binary_search_tree_delete(t, 88));
   size_t ret = binary_search_tree_inorder(t, callback);
   cr_assert_eq(ret, 8);
+  cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
 
 Test(BinarySearchTree, DeleteNodeWhichHasTwoChildren)
 {
+  const int64_t expect[] = {1, 16, 17, 20, 25, 30, 88, 99};
   cr_assert(binary_search_tree_delete(t, 12));
   size_t ret = binary_search_tree_inorder(t, callback);
   cr_assert_eq(ret, 8);
+  cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
 
 Test(BinarySearchTree, DeleteTopNode)
 {
+  const int64_t expect[] = {1, 12, 16, 17, 20, 25, 88, 99};
   cr_assert(binary_search_tree_delete(t, 30));
   size_t ret = binary_search_tree_inorder(t, callback);
   cr_assert_eq(ret, 8);
+  cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
+}
+
+Test(BinarySearchTree, DeleteTwoNodes)
+{
+  const int64_t expect[] = {1, 12, 16, 17, 20, 25, 30};
+  cr_assert(binary_search_tree_delete(t, 88));
+  cr_assert(binary_search_tree_delete(t, 99));
+
+  size_t ret = binary_search_tree_inorder(t, callback);
+  cr_assert_eq(ret, 7);
+  cr_assert_arr_eq(buffer, expect, UTIL_ARRAY_SIZE(expect) * sizeof(int64_t));
 }
 
 Test(BinarySearchTreeMemoryAllocationCheck, AllAllocationIsFreed)
@@ -216,10 +237,11 @@ Test(BinarySearchTreeMemoryAllocationCheck, AllAllocationIsFreed)
   binary_search_tree_insert(t, 88);
   binary_search_tree_insert(t, 12);
   binary_search_tree_insert(t, 1);
+  binary_search_tree_delete(t, 88);
   binary_search_tree_insert(t, 20);
   binary_search_tree_insert(t, 17);
   binary_search_tree_insert(t, 25);
-  cr_assert_eq(memory_allocation_counter, 8);
+  cr_assert_eq(memory_allocation_counter, 7);
   binary_search_tree_destroy(t);
   cr_assert_eq(memory_allocation_counter, 0);
 }

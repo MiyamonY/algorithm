@@ -126,6 +126,9 @@ extern bool complete_binary_tree_insert(complete_binary_tree_t t, int32_t data);
 extern complete_binary_tree_key complete_binary_tree_parent(complete_binary_tree_t t, complete_binary_tree_key key);
 extern complete_binary_tree_key complete_binary_tree_left_key(complete_binary_tree_t t, complete_binary_tree_key key);
 extern complete_binary_tree_key complete_binary_tree_right_key(complete_binary_tree_t t, complete_binary_tree_key key);
+
+extern void maximum_heap_build(int64_t arr[], size_t len);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

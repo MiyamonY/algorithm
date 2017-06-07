@@ -117,6 +117,15 @@ extern size_t binary_search_tree_inorder(binary_search_tree_t t, binary_search_t
 extern bool binary_search_tree_find(binary_search_tree_t t, int64_t data);
 extern bool binary_search_tree_delete(binary_search_tree_t t, int64_t data);
 
+typedef struct complete_binary_tree_t *complete_binary_tree_t;
+typedef int64_t complete_binary_tree_key;
+#define COMPLETE_BINARY_TREE_KEY_NONE -1
+extern complete_binary_tree_t complete_binary_tree_create(size_t n);
+extern void complete_binary_tree_destroy(complete_binary_tree_t t);
+extern bool complete_binary_tree_insert(complete_binary_tree_t t, int32_t data);
+extern complete_binary_tree_key complete_binary_tree_parent(complete_binary_tree_t t, complete_binary_tree_key key);
+extern complete_binary_tree_key complete_binary_tree_left_key(complete_binary_tree_t t, complete_binary_tree_key key);
+extern complete_binary_tree_key complete_binary_tree_right_key(complete_binary_tree_t t, complete_binary_tree_key key);
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

@@ -72,5 +72,8 @@ test_tree_walk: binary_tree.c test/test_tree_walk.c
 test_binary_search_tree: binary_search_tree.c test/test_binary_search_tree.c
 	gcc -o $@ $^ $(TEST_ARGS) -Wl,-wrap,malloc,-wrap,free
 
+test_complete_binary_tree: complete_binary_tree.c test/test_complete_binary_tree.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

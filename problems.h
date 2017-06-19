@@ -129,6 +129,8 @@ extern complete_binary_tree_key complete_binary_tree_right_key(complete_binary_t
 
 extern void maximum_heap_build(int64_t arr[], size_t len);
 
+extern int64_t fibonacchi_number(int64_t num);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

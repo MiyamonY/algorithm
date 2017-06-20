@@ -81,5 +81,8 @@ test_maximum_heap: maximum_heap.c test/test_maximum_heap.c
 test_fibonacchi_number: fibonacchi_number.c test/test_fibonacchi_number.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_longest_common_subsequence: longest_common_subsequence.c test/test_longest_common_subsequence.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

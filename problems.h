@@ -132,6 +132,29 @@ extern void maximum_heap_build(int64_t arr[], size_t len);
 extern int64_t fibonacchi_number(int64_t num);
 extern size_t longest_common_subsequence(char arr1[], size_t n1, char arr2[], size_t n2);
 
+#define GRAPH_MATRIX_SIZE 256
+
+typedef enum {
+  WHITE,
+  GRAY,
+  BLACK,
+} color_t;
+
+typedef struct {
+  uint32_t index;
+  size_t len;
+  uint32_t array[GRAPH_MATRIX_SIZE];
+  color_t color;
+} graph_vertex_t;
+
+typedef void (*graph_depth_first_search_callback_t)(uint32_t);
+typedef void (*graph_breadth_first_search_callback_t)(uint32_t, uint32_t);
+
+extern bool graph_converts_to_matrix(graph_vertex_t vertexes[], size_t len, uint32_t matrix[][GRAPH_MATRIX_SIZE]);
+extern void graph_depth_first_search(graph_vertex_t *vertex, size_t num, graph_depth_first_search_callback_t callback_pre,
+                                     graph_depth_first_search_callback_t callback_post);
+extern void graph_breadth_first_search(graph_vertex_t *vertex, size_t num, graph_breadth_first_search_callback_t callback);
+
 extern int64_t gcd(const int64_t a, const int64_t b);
 
 #ifdef __cplusplus

@@ -84,5 +84,17 @@ test_fibonacchi_number: fibonacchi_number.c test/test_fibonacchi_number.c
 test_longest_common_subsequence: longest_common_subsequence.c test/test_longest_common_subsequence.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_graph: graph.c test/test_graph.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
+test_graph_depth_first_search: graph_depth_first_search.c test/test_graph_depth_first_search.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
+test_graph_breadth_first_search: graph_breadth_first_search.c test/test_graph_breadth_first_search.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
+test_graph_connected_components: graph_connected_components.cpp test/test_graph_connected_components.cpp
+	g++ -o $@ $^ $(TEST_ARGS) -std=c++11
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

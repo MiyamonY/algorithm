@@ -96,5 +96,8 @@ test_graph_breadth_first_search: graph_breadth_first_search.c test/test_graph_br
 test_graph_connected_components: graph_connected_components.cpp test/test_graph_connected_components.cpp
 	g++ -o $@ $^ $(TEST_ARGS) -std=c++11
 
+test_minimum_spannig_tree: minimum_spanning_tree.c test/test_minimum_spanning_tree.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

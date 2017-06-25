@@ -99,5 +99,8 @@ test_graph_connected_components: graph_connected_components.cpp test/test_graph_
 test_minimum_spannig_tree: minimum_spanning_tree.c test/test_minimum_spanning_tree.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_single_source_shortest_path1: single_source_shortest_path1.c test/test_single_source_shortest_path1.c
+	gcc -o $@ $^ $(TEST_ARGS)
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

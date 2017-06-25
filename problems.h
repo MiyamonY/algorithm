@@ -157,6 +157,9 @@ extern void graph_breadth_first_search(graph_vertex_t *vertex, size_t num, graph
 
 #define MINIMUM_SPANNING_TREE_GRAPH_SIZE 100
 extern bool minimum_spannig_tree(int32_t graph[][MINIMUM_SPANNING_TREE_GRAPH_SIZE], size_t size, size_t *weight);
+typedef void(single_source_shortest_path_callback_t)(uint32_t index, int32_t weight);
+extern bool single_source_shortest_path(int32_t graph[][MINIMUM_SPANNING_TREE_GRAPH_SIZE], size_t size,
+                                        single_source_shortest_path_callback_t callback);
 
 extern int64_t gcd(const int64_t a, const int64_t b);
 

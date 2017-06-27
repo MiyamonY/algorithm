@@ -102,5 +102,8 @@ test_minimum_spannig_tree: minimum_spanning_tree.c test/test_minimum_spanning_tr
 test_single_source_shortest_path1: single_source_shortest_path1.c test/test_single_source_shortest_path1.c
 	gcc -o $@ $^ $(TEST_ARGS)
 
+test_single_source_shortest_path2: single_source_shortest_path2.cpp test/test_single_source_shortest_path2.cpp
+	g++ -o $@ $^ $(TEST_ARGS) -std=c++11
+
 clean:
 	$(RM)  insertion gcd test_gcd test_insertion test_bubble test_selection

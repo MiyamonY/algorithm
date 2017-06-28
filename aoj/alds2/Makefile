@@ -10,5 +10,8 @@ test_maximum_profit: maximum_profit.cpp test/test_maximum_profit.cpp
 test_insersion_sort: insersion_sort.cpp test/test_insersion_sort.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_bubble_sort: bubble_sort.cpp test/test_bubble_sort.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

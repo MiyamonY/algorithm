@@ -18,3 +18,5 @@ extern void selection_sort(int32_t array[], size_t size, void (*callback)(int32_
 extern void stable_sort_bubble_sort(pair<int32_t, uint8_t> array[], size_t size);
 extern void stable_sort_selection_sort(pair<int32_t, uint8_t> array[], size_t size);
 extern void shell_sort(int32_t array[], size_t size, void (*callback)(int32_t array[], uint32_t index, uint32_t index2));
+extern void stack_push(int32_t data);
+extern bool stack_pop(int32_t &data);

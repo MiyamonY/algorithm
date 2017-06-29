@@ -22,5 +22,8 @@ test_stable_sort: stable_sort.cpp test/test_stable_sort.cpp
 test_shell_sort: shell_sort.cpp test/test_shell_sort.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_stack: stack.cpp test/test_stack.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -20,3 +21,15 @@ extern void stable_sort_selection_sort(pair<int32_t, uint8_t> array[], size_t si
 extern void shell_sort(int32_t array[], size_t size, void (*callback)(int32_t array[], uint32_t index, uint32_t index2));
 extern void stack_push(int32_t data);
 extern bool stack_pop(int32_t &data);
+
+struct process_t {
+  string name;
+  uint32_t time;
+  bool operator==(const process_t &p1) const
+  {
+    return (p1.name == this->name) && (p1.time == this->time);
+  }
+};
+extern bool queue_dequeue(process_t &process);
+extern void queue_enqueue(process_t process);
+extern bool queue_empty();

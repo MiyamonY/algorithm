@@ -46,3 +46,4 @@ extern void areas_on_cross_section_diagram_init();
 extern void areas_on_cross_section_diagram_add(char c);
 extern size_t areas_on_cross_section_diagram_total();
 extern void areas_on_cross_section_diagram_areas(void (*callback)(size_t));
+extern size_t linear_search(uint32_t s[], size_t size_s, uint32_t t[], size_t size_t);

@@ -34,5 +34,8 @@ test_double_linked_list: double_linked_list.cpp test/test_double_linked_list.cpp
 test_areas_on_cross_section_diagram: areas_on_cross_section_diagram.cpp test/test_areas_on_cross_section_diagram.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_linear_search: linear_search.cpp test/test_linear_search.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

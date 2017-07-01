@@ -37,5 +37,8 @@ test_areas_on_cross_section_diagram: areas_on_cross_section_diagram.cpp test/tes
 test_linear_search: linear_search.cpp test/test_linear_search.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_binary_search: binary_search.cpp test/test_binary_search.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

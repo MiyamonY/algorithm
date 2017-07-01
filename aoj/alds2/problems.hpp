@@ -33,3 +33,16 @@ struct process_t {
 extern bool queue_dequeue(process_t &process);
 extern void queue_enqueue(process_t process);
 extern bool queue_empty();
+
+struct double_linked_list_t;
+extern double_linked_list_t *double_linked_list_create();
+extern void double_linked_list_destroy(double_linked_list_t *list);
+extern void double_linked_list_insert(double_linked_list_t *list, uint32_t val);
+extern void double_linked_list_delete(double_linked_list_t *list, uint32_t val);
+extern void double_linked_list_iter(double_linked_list_t *list, void (*callback)(uint32_t));
+extern void double_linked_list_delete_first(double_linked_list_t *list);
+extern void double_linked_list_delete_last(double_linked_list_t *list);
+extern void areas_on_cross_section_diagram_init();
+extern void areas_on_cross_section_diagram_add(char c);
+extern size_t areas_on_cross_section_diagram_total();
+extern void areas_on_cross_section_diagram_areas(void (*callback)(size_t));

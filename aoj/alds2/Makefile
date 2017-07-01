@@ -28,5 +28,11 @@ test_stack: stack.cpp test/test_stack.cpp
 test_queue: queue.cpp test/test_queue.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_double_linked_list: double_linked_list.cpp test/test_double_linked_list.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
+test_areas_on_cross_section_diagram: areas_on_cross_section_diagram.cpp test/test_areas_on_cross_section_diagram.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

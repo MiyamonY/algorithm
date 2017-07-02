@@ -48,3 +48,7 @@ extern size_t areas_on_cross_section_diagram_total();
 extern void areas_on_cross_section_diagram_areas(void (*callback)(size_t));
 extern size_t linear_search(uint32_t s[], size_t size_s, uint32_t t[], size_t size_t);
 extern size_t binary_search(uint32_t array[], size_t size, uint32_t v);
+extern void dictionary_init();
+extern void dictionary_insert(char str[]);
+extern bool dictionary_find(char str[]);
+extern size_t allocation_load_capcity(vector<uint32_t> baggages, uint32_t capacity, uint32_t tracks);

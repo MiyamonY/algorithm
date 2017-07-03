@@ -46,5 +46,8 @@ test_dictionary: dictionary.cpp test/test_dictionary.cpp
 test_allocation: allocation.cpp test/test_allocation.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_exhaustive_search: exhaustive_search.cpp test/test_exhaustive_search.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

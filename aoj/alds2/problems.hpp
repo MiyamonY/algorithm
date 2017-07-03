@@ -53,3 +53,4 @@ extern void dictionary_insert(char str[]);
 extern bool dictionary_find(char str[]);
 extern size_t allocation_load_capcity(vector<uint32_t> baggages, int64_t capacity, uint32_t tracks);
 extern size_t allocation_max_load_capcity(vector<uint32_t> baggages, uint32_t tracks);
+extern bool exausitve_search_search(vector<uint32_t> vec, int32_t val);

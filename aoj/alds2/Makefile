@@ -49,5 +49,8 @@ test_allocation: allocation.cpp test/test_allocation.cpp
 test_exhaustive_search: exhaustive_search.cpp test/test_exhaustive_search.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_koch_curve: koch_curve.cpp test/test_koch_curve.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

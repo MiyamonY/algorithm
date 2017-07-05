@@ -55,5 +55,8 @@ test_koch_curve: koch_curve.cpp test/test_koch_curve.cpp
 test_merge_sort: merge_sort.cpp test/test_merge_sort.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_partition: partition.cpp test/test_partition.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

@@ -56,3 +56,4 @@ extern size_t allocation_max_load_capcity(vector<uint32_t> baggages, uint32_t tr
 extern bool exausitve_search_search(vector<uint32_t> vec, int32_t val);
 extern void koch_curve(vector<pair<double, double>> &vec, uint32_t num);
 extern void merge_sort_merge(uint32_t array[], size_t size);
+extern size_t partition(uint32_t array[], size_t start, size_t end);

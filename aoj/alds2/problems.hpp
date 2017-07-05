@@ -57,3 +57,5 @@ extern bool exausitve_search_search(vector<uint32_t> vec, int32_t val);
 extern void koch_curve(vector<pair<double, double>> &vec, uint32_t num);
 extern void merge_sort_merge(uint32_t array[], size_t size);
 extern size_t partition(uint32_t array[], size_t start, size_t end);
+extern void quick_sort_sort(uint32_t array[], size_t start, size_t end);
+extern void quick_sort_merge_sort(uint32_t vec[], size_t start, size_t end);

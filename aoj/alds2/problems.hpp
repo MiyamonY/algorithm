@@ -59,3 +59,4 @@ extern void merge_sort_merge(uint32_t array[], size_t size);
 extern size_t partition(uint32_t array[], size_t start, size_t end);
 extern void quick_sort_sort(uint32_t array[], size_t start, size_t end);
 extern void quick_sort_merge_sort(uint32_t vec[], size_t start, size_t end);
+extern void counting_sort_sort(uint32_t vec[], size_t size, uint32_t result[]);

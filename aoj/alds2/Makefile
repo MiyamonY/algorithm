@@ -61,5 +61,8 @@ test_partition: partition.cpp test/test_partition.cpp
 test_quick_sort: quick_sort.cpp test/test_quick_sort.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_counting_sort: counting_sort.cpp test/test_counting_sort.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

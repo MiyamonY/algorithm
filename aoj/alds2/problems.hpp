@@ -61,3 +61,6 @@ extern void quick_sort_sort(uint32_t array[], size_t start, size_t end);
 extern void quick_sort_merge_sort(uint32_t vec[], size_t start, size_t end);
 extern void counting_sort_sort(uint32_t vec[], size_t size, uint32_t result[]);
 extern uint64_t number_of_inversion(uint32_t vec[], size_t size);
+extern void rooted_tree_init();
+extern void rooted_tree_add(int32_t index, vector<int32_t> children);
+extern void rooted_tree_info(int32_t index, int32_t &parent, vector<int32_t> &children, size_t &depth);

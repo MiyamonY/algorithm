@@ -67,5 +67,8 @@ test_counting_sort: counting_sort.cpp test/test_counting_sort.cpp
 test_number_of_inversions: number_of_inversions.cpp test/test_number_of_inversions.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_rooted_trees: rooted_trees.cpp test/test_rooted_trees.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

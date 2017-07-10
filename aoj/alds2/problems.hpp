@@ -64,3 +64,6 @@ extern uint64_t number_of_inversion(uint32_t vec[], size_t size);
 extern void rooted_tree_init();
 extern void rooted_tree_add(int32_t index, vector<int32_t> children);
 extern void rooted_tree_info(int32_t index, int32_t &parent, vector<int32_t> &children, size_t &depth);
+extern void binary_tree_init();
+extern void binary_tree_add(int32_t index, int32_t left, int32_t right);
+extern void binary_tree_info(int32_t index, int32_t &parent, int32_t &sibling, size_t &degree, size_t &depth, size_t &height);

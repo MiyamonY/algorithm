@@ -70,5 +70,8 @@ test_number_of_inversions: number_of_inversions.cpp test/test_number_of_inversio
 test_rooted_trees: rooted_trees.cpp test/test_rooted_trees.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_binary_tree: binary_tree.cpp test/test_binary_tree.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

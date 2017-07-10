@@ -90,8 +90,50 @@ void binary_tree_info(int32_t index, int32_t &parent, int32_t &sibling, size_t &
   height = node_height(index);
 }
 
+void binary_tree_walk(int32_t index, void (*preorder)(int32_t), void (*inorder)(int32_t), void (*postorder)(int32_t))
+{
+  if (index == -1) return;
+
+  if (preorder != nullptr) {
+    preorder(index);
+  }
+
+  binary_tree_walk(trees[index].left, preorder, inorder, postorder);
+
+  if (inorder != nullptr) {
+    inorder(index);
+  }
+
+  binary_tree_walk(trees[index].right, preorder, inorder, postorder);
+
+  if (postorder != nullptr) {
+    postorder(index);
+  }
+}
+
 #if !defined(TEST)
 #include <iostream>
+#include <vector>
+
+static vector<int32_t> pre;
+static vector<int32_t> in;
+static vector<int32_t> post;
+
+static void preorder(int32_t index)
+{
+  pre.push_back(index);
+}
+
+static void inorder(int32_t index)
+{
+  in.push_back(index);
+}
+
+static void postorder(int32_t index)
+{
+  post.push_back(index);
+}
+
 int32_t main()
 {
   binary_tree_init();
@@ -105,6 +147,7 @@ int32_t main()
     binary_tree_add(index, left, right);
   }
 
+#if 0
   for (uint32_t i = 0; i < num; i++) {
     int32_t parent, sibling;
     size_t degree, depth, height;
@@ -122,6 +165,36 @@ int32_t main()
 
     cout << endl;
   }
+#endif
+
+  int32_t root = 0;
+  for (uint32_t i = 0; i < num; i++) {
+    if (trees[i].parent == -1) {
+      root = i;
+      break;
+    }
+  }
+
+  binary_tree_walk(root, preorder, inorder, postorder);
+
+  cout << "Preorder" << endl;
+  for (uint32_t i = 0; i < pre.size(); i++) {
+    cout << " " << pre[i];
+  }
+  cout << endl;
+
+  cout << "Inorder" << endl;
+  for (uint32_t i = 0; i < in.size(); i++) {
+    cout << " " << in[i];
+  }
+  cout << endl;
+
+  cout << "Postorder" << endl;
+  for (uint32_t i = 0; i < post.size(); i++) {
+    cout << " " << post[i];
+  }
+  cout << endl;
+
   return 0;
 }
 #endif

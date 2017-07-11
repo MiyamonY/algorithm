@@ -67,3 +67,7 @@ extern void rooted_tree_info(int32_t index, int32_t &parent, vector<int32_t> &ch
 extern void binary_tree_init();
 extern void binary_tree_add(int32_t index, int32_t left, int32_t right);
 extern void binary_tree_info(int32_t index, int32_t &parent, int32_t &sibling, size_t &degree, size_t &depth, size_t &height);
+
+extern void binary_search_tree_insert(int64_t val);
+extern void binary_search_tree_walk(void (*preorder)(int64_t), void (*inorder)(int64_t), void (*postorder)(int64_t));
+extern void binary_search_tree_delete(int64_t val);

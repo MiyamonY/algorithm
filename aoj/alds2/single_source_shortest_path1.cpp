@@ -11,6 +11,7 @@
 using namespace std;
 
 #define GRAPH_SIZE 100
+#define WEIGHT_MAX (1 << 21)
 
 enum state_t {
   WHITE,
@@ -25,27 +26,29 @@ static uint32_t dist[GRAPH_SIZE];
 size_t single_source_shotest_path(size_t num)
 {
   size_t cost = 0;
+
   for (uint32_t i = 0; i < num; i++) {
     state[i] = WHITE;
-    dist[i] = UINT32_MAX;
+    dist[i] = WEIGHT_MAX;
   }
 
   state[0] = GRAY;
   dist[0] = 0;
 
   while (true) {
-    size_t minimum_cost = UINT32_MAX;
+    size_t minimum_cost = WEIGHT_MAX;
     uint32_t to = 0;
     for (uint32_t i = 0; i < num; i++) {
-      if (dist[i] < minimum_cost) {
+      if ((dist[i] < minimum_cost) && (state[i] != BLACK)) {
         minimum_cost = dist[i];
         to = i;
       }
     }
 
-    if (minimum_cost == UINT32_MAX) break;
+    if (minimum_cost == WEIGHT_MAX) break;
 
-    cost += dist[to];
+    cost += minimum_cost;
+    state[to] = BLACK;
 
     for (uint32_t i = 0; i < num; i++) {
       if (((dist[to] + graph[to][i]) < dist[i]) && state[i] != BLACK) {
@@ -53,7 +56,6 @@ size_t single_source_shotest_path(size_t num)
         dist[i] = dist[to] + graph[to][i];
       }
     }
-    state[to] = BLACK;
   }
 
   return cost;
@@ -68,7 +70,7 @@ int32_t main()
 
   for (uint32_t i = 0; i < num; i++) {
     for (uint32_t j = 0; j < num; j++) {
-      graph[i][j] = UINT32_MAX;
+      graph[i][j] = WEIGHT_MAX;
     }
   }
 
@@ -82,7 +84,11 @@ int32_t main()
     }
   }
 
-  cout << single_source_shotest_path(num) << endl;
+  single_source_shotest_path(num);
+
+  for (uint32_t i = 0; i < num; i++) {
+    cout << i << " " << dist[i] << endl;
+  }
 
   return 0;
 }

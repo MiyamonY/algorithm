@@ -71,3 +71,6 @@ extern void binary_tree_info(int32_t index, int32_t &parent, int32_t &sibling, s
 extern void binary_search_tree_insert(int64_t val);
 extern void binary_search_tree_walk(void (*preorder)(int64_t), void (*inorder)(int64_t), void (*postorder)(int64_t));
 extern void binary_search_tree_delete(int64_t val);
+extern void union_find_tree_init(size_t len);
+extern void union_find_tree_unite(uint32_t x, uint32_t y);
+extern bool union_find_tree_same(uint32_t x, uint32_t y);

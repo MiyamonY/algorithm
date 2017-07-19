@@ -76,5 +76,8 @@ test_binary_tree: binary_tree.cpp test/test_binary_tree.cpp
 test_binary_search_tree: binary_search_tree.cpp test/test_binary_search_tree.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
 
+test_union_find_tree: union_find_tree.cpp test/test_union_find_tree.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -DTEST -lcriterion $^ -o $@
+
 clean:
 	$(RM) test_maximum_profit

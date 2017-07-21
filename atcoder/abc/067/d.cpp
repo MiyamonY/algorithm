@@ -19,7 +19,7 @@ enum status_t {
 };
 
 static vector<uint32_t> tree[GRAPH_SIZE];
-static uint32_t distance_from0[GRAPH_SIZE];
+static uint32_t distance_from1[GRAPH_SIZE];
 static uint32_t distance_fromN[GRAPH_SIZE];
 static status_t status[GRAPH_SIZE];
 
@@ -35,9 +35,9 @@ static void dist(uint32_t index, uint32_t d, void (*callback)(uint32_t i, uint32
   }
 }
 
-static void callback0(uint32_t i, uint32_t dist)
+static void callback1(uint32_t i, uint32_t dist)
 {
-  distance_from0[i] = dist;
+  distance_from1[i] = dist;
 }
 
 static void callbackN(uint32_t i, uint32_t dist)
@@ -59,9 +59,9 @@ int32_t main()
 
   for (uint32_t i = 1; i <= num; i++) {
     status[i] = WHITE;
-    distance_from0[i] = 0;
+    distance_from1[i] = 0;
   }
-  dist(1, 0, callback0);
+  dist(1, 0, callback1);
 
   for (uint32_t i = 1; i <= num; i++) {
     status[i] = WHITE;
@@ -71,15 +71,14 @@ int32_t main()
 
   uint32_t black = 0, white = 0;
   for (uint32_t i = 1; i <= num; i++) {
-    cout << i << " " << distance_from0[i] << " " << distance_fromN[i] << endl;
-    if (distance_from0[i] <= distance_fromN[i]) {
+    if (distance_from1[i] <= distance_fromN[i]) {
       black++;
     } else {
       white++;
     }
   }
 
-  if (white <= black) {
+  if (white < black) {
     cout << "Fennec" << endl;
   } else {
     cout << "Snuke" << endl;

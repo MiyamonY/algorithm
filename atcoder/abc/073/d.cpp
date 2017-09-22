@@ -9,10 +9,9 @@ using namespace std;
 static uint32_t rs[MAX_R];
 static uint32_t perm[MAX_R];
 static bool used[MAX_R];
-static int32_t graphs[MAX_VERTEX][MAX_VERTEX];
-static int32_t routes[MAX_VERTEX][MAX_VERTEX];
+static uint64_t routes[MAX_VERTEX][MAX_VERTEX];
 
-uint64_t apply_all_patterns(int32_t len, uint32_t max)
+uint64_t apply_all_patterns(uint32_t len, uint32_t max)
 {
   if (len == max) {
     uint64_t weight = 0;
@@ -41,24 +40,11 @@ uint32_t min_path(int32_t R)
   return apply_all_patterns(0, R);
 }
 
-void init_graphs(uint32_t N)
+void init_routes(uint32_t N)
 {
   for (uint32_t i = 0; i < N; i++) {
     for (uint32_t j = 0; j < N; j++) {
-      if (i == j) {
-        graphs[i][j] = 0;
-      } else {
-        graphs[i][j] = -1;
-      }
-    }
-  }
-}
-
-void init_routes(int32_t N)
-{
-  for (uint32_t i = 0; i < N; i++) {
-    for (uint32_t j = 0; j < N; j++) {
-      routes[i][j] = INT32_MAX;
+      routes[i][j] = UINT32_MAX;
     }
   }
 }
@@ -73,41 +59,23 @@ int32_t main()
     rs[i]--;
   }
 
-  init_graphs(N);
+  init_routes(N);
   for (uint32_t i = 0; i < M; i++) {
     uint32_t A, B, C;
     cin >> A >> B >> C;
-    graphs[A - 1][B - 1] = graphs[B - 1][A - 1] = C;
+    A--;
+    B--;
+    routes[A][B] = routes[B][A] = C;
   }
 
-  init_routes(N);
-  for (uint32_t i = 0; i < N; i++) {
-    for (uint32_t j = 0; j < N; j++) {
-      for (uint32_t k = 0; k < N; k++) {
-        if ((graphs[i][k] == -1) || (graphs[k][j] == -1)) continue;
-        int32_t weight = graphs[i][k] + graphs[k][j];
+  for (uint32_t k = 0; k < N; k++) {
+    for (uint32_t i = 0; i < N; i++) {
+      for (uint32_t j = 0; j < N; j++) {
+        uint64_t weight = routes[i][k] + routes[k][j];
         routes[i][j] = min(weight, routes[i][j]);
       }
     }
   }
-
-  cout << endl << endl;
-  for (uint32_t i = 0; i < N; i++) {
-    for (uint32_t j = 0; j < N; j++) {
-      cout << graphs[i][j] << " ";
-    }
-    cout << endl;
-  }
-  cout << endl << endl;
-
-  cout << endl << endl;
-  for (uint32_t i = 0; i < N; i++) {
-    for (uint32_t j = 0; j < N; j++) {
-      cout << routes[i][j] << " ";
-    }
-    cout << endl;
-  }
-  cout << endl << endl;
 
   cout << min_path(R) << endl;
 

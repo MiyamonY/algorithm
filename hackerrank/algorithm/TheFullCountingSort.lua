@@ -1,4 +1,3 @@
-local inspect = require "inspect"
 local n = io.read('*n', "*l")
 
 local t = {}
@@ -25,10 +24,6 @@ for i = 1, #t do
   nums[no] = nums[no] + 1
   strs[no][#strs[no]+1] = t[i].str
 end
-
-print(inspect(t))
-print(inspect(nums))
-print(inspect(strs))
 
 for i = 0, 99 do
   local j = 1

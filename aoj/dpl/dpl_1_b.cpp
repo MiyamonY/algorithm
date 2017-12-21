@@ -11,36 +11,26 @@
 
 using namespace std;
 
-struct item_t {
-  int32_t value;
-  int32_t weight;
-};
-
-#define MAX_NUM 101
-#define MAX_WEIGHT 10001
-
-static vector<item_t> weights;
-static int32_t dp[MAX_NUM][MAX_WEIGHT];
-
 int32_t main()
 {
   int32_t N, W;
   cin >> N >> W;
 
-  weights.push_back({0, 0});
-  for (int32_t i = 0; i < N; i++) {
-    int32_t value, weight;
-    cin >> value >> weight;
-    weights.push_back({value, weight});
+  vector<pair<int32_t, int32_t>> items(N + 1);
+  for (int32_t i = 1; i <= N; i++) {
+    cin >> items[i].first;
+    cin >> items[i].second;
   }
 
-  for (int32_t n = 1; n <= N; n++) {
-    for (int32_t weight = 0; weight <= W; weight++) {
-      item_t item = weights[n];
-
-      dp[n][weight] = dp[n - 1][weight];
-      if (weight - item.weight >= 0) {
-        dp[n][weight] = max(dp[n][weight], item.value + dp[n - 1][weight - item.weight]);
+  vector<vector<uint32_t>> dp(N + 1, vector<uint32_t>(W + 1, 0));
+  for (int32_t i = 1; i <= N; i++) {
+    int32_t v = items[i].first;
+    int32_t w = items[i].second;
+    for (int32_t j = 0; j <= W; j++) {
+      if (j - w >= 0) {
+        dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w] + v);
+      } else {
+        dp[i][j] = dp[i - 1][j];
       }
     }
   }

@@ -12,35 +12,27 @@
 
 using namespace std;
 
-static vector<uint32_t> arr;
-static vector<uint32_t> l;
-
 int32_t main()
 {
-  uint32_t n;
-  cin >> n;
+  uint32_t N;
+  cin >> N;
 
-  for (uint32_t i = 0; i < n; i++) {
-    uint32_t val;
-    cin >> val;
-    arr.push_back(val);
+  vector<uint64_t> arr(N, 0);
+  for (uint32_t i = 0; i < N; i++) {
+    cin >> arr[i];
   }
 
-  l.push_back(arr[0]);
-  for (uint32_t i = 1; i < arr.size(); i++) {
-    if (l[l.size() - 1] < arr[i]) {
-      l.push_back(arr[i]);
-    } else {
-      uint32_t at = lower_bound(l.begin(), l.end(), arr[i]) - l.begin();
-      l[at] = arr[i];
+  vector<uint64_t> dp(N + 1, 1 << 30);
+  for (uint32_t i = 0; i < N; i++) {
+    *lower_bound(dp.begin(), dp.end(), arr[i]) = arr[i];
+  }
+
+  for (uint32_t i = 0; i <= N; i++) {
+    if (dp[i] == 1 << 30) {
+      cout << i << endl;
+      break;
     }
-    // for (uint32_t i = 0; i < l.size(); i++) {
-    //   cout << l[i] << " ";
-    // }
-    // cout << endl;
   }
-
-  cout << l.size() << endl;
 
   return 0;
 }

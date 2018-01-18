@@ -1,0 +1,45 @@
+///
+// File:  a.cpp
+// Author: ymiyamoto
+//
+// Created on Thu Jan 18 22:51:03 2018
+//
+#include <bits/stdc++.h>
+using namespace std;
+
+#define rep(_n, _init, _N) for (int32_t _n = _init; _n < (int32_t)(_N); _n++)
+#define rrep(_n, _N, _end) for (int32_t _n = (int32_t)(_N); _n >= _end; _n--)
+#define iceil(_x, _y) (((_x) + (_y)-1) / (_y))
+#define ifloor(_x, _y) ((_x) / (_y))
+
+static const double pi = 2 * asin(1);
+static const double precision = 10e-9;
+
+int32_t main()
+{
+  uint32_t A, B, C;
+  cin >> A >> B >> C;
+  vector<uint32_t> points = {A, B, C};
+  sort(points.begin(), points.end(), greater<uint32_t>());
+
+  rep(i, 0, 3)
+  {
+    if (points[i] == A) {
+      cout << i + 1 << endl;
+    }
+  }
+  rep(i, 0, 3)
+  {
+    if (points[i] == B) {
+      cout << i + 1 << endl;
+    }
+  }
+  rep(i, 0, 3)
+  {
+    if (points[i] == C) {
+      cout << i + 1 << endl;
+    }
+  }
+
+  return 0;
+}

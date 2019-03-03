@@ -31,6 +31,8 @@
 .vscode
 test
 
+target/
+
 a
 b
 c

@@ -15,7 +15,7 @@ module CombMemo = struct
   let rec pow n m =
     if m = 0 then 1
     else if m mod 2 = 0 then pow (n*%n) (m/2)
-    else n * pow (n*%n) (m/2)
+    else n *% pow (n*%n) (m/2)
 
   let rec fact n =
     match memo.(n) with

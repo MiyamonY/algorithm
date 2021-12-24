@@ -13,8 +13,8 @@ module BinarySearch = struct
     let rec aux l h =
       let m = (l + h) / 2 in
       if l + 1 = h then h
-      else if f arr.(m) then aux m h
-      else aux l m
+      else if f arr.(m) then aux l m
+      else aux m h
     in aux (-1) @@ Array.length arr
 end
 
